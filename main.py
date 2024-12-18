@@ -47,7 +47,7 @@ class TrafficLight:
 
     def adaptive_control(self):
         with self.lock:
-            if not self.is_pedestrian and self.car_queue > 5:  # Threshold for cars
+            if not self.is_pedestrian and self.car_queue > 5:  
                 self.change_state('green')
                 optimal_time = self.predict_optimal_time(self.car_queue, self.pedestrian_queue)
                 time.sleep(optimal_time)
@@ -70,8 +70,7 @@ class TrafficLight:
     def predict_optimal_time(self, car_count, pedestrian_count):
         input_data = np.array([[car_count, pedestrian_count]])
         prediction = self.model.predict(input_data)
-        return max(int(prediction[0][0]), 5)  # Ensure minimum green time
-
+        return max(int(prediction[0][0]), 5)  
     def send_event(self, traffic_light_id, cars=0, pedestrians=0):
         event = {'cars': cars, 'pedestrians': pedestrians}
         print(f"Traffic Light {self.id} sending event to {traffic_light_id}: {event}")
@@ -100,7 +99,7 @@ for _ in range(10):
     pedestrians = random.randint(0, 5)
     pedestrian_traffic_lights[light_id].send_event(light_id + 4, pedestrians=pedestrians)
 
-    time.sleep(random.uniform(30, 60))  # Random pause between events
+    time.sleep(random.uniform(30, 60)) 
 
 time.sleep(20)
 for light in car_traffic_lights.values():
